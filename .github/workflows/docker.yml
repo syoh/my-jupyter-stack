@@ -68,3 +68,4 @@ jobs:
           file: "Dockerfile"
           tags: |
             syoh/my-jupyter-stack:${{steps.getrefs.outputs.sha12}}, syoh/my-jupyter-stack:latest
+          push: true
