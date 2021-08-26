@@ -59,7 +59,7 @@ setup:
 start: ARGS?=-d
 start: PORT?=443
 start: 
-	IMAGE=$(IMAGE) PORT=$(PORT) docker-compose up $(ARGS)
+	PORT=$(PORT) docker-compose up $(ARGS)
 
 
 
@@ -75,4 +75,4 @@ colab:
 
 stop: ARGS?=
 stop: ## Stop container with docker-compose.yml
-	IMAGE=$(IMAGE) docker-compose down $(ARGS)
+	docker-compose down $(ARGS)
