@@ -1,0 +1,20 @@
+version: '3'
+services:
+  notebook:
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    image: syoh/my-jupyter-stack:latest
+    volumes:
+      - ${HOST_DIR}:/home/jovyan/work
+      - ${CERT_DIR}:/etc/letsencrypt
+    user: 'root' # passwordless sudo
+    environment:
+      JUPYTER_ENABLE_LAB: 'yes'
+      GRANT_SUDO: 'yes'
+    ports:
+      - ${PORT:-0}:8888
+    command: "start-notebook.sh \
+              --NotebookApp.disable_check_xsrf=True \
+              --NotebookApp.password=${PASSWD} \
+              ${OPT:---NotebookApp.certfile=/etc/letsencrypt/live/lab.syoh.org/fullchain.pem --NotebookApp.keyfile=/etc/letsencrypt/live/lab.syoh.org/privkey.pem}"

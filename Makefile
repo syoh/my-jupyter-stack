@@ -42,5 +42,37 @@ test: ## Make a test run against the latest image
 
 
 
+test-env: ## Make a test environment by installing test dependencies with pip
+	pip install -r tests/requirements.txt
+
+
+
 dev-env: ## install libraries required to build the image and run tests
 	pip install -r requirements-dev.txt
+
+
+setup:
+	./setup.sh
+
+
+
+start: ARGS?=-d
+start: PORT?=443
+start: 
+	IMAGE=$(IMAGE) PORT=$(PORT) docker-compose up $(ARGS)
+
+
+
+colab: ARGS?=-d
+colab: OPT?="\
+	--NotebookApp.port_retries=0 \
+	--NotebookApp.token='' \
+	--NotebookApp.allow_origin='https://colab.research.google.com'"
+colab: 
+	PORT=8888 PASSWD="" OPT=$(OPT) docker-compose up $(ARGS)
+
+
+
+stop: ARGS?=
+stop: ## Stop container with docker-compose.yml
+	IMAGE=$(IMAGE) docker-compose down $(ARGS)
