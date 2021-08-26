@@ -1,4 +1,4 @@
-FROM jupyter/scipy-notebook:70178b8e48d7
+FROM jupyter/minimal-notebook:70178b8e48d7
 
 # Fix DL4006
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
@@ -56,7 +56,8 @@ USER root
 
 RUN \
     # download R studio
-    curl --silent -L --fail https://s3.amazonaws.com/rstudio-ide-build/server/bionic/amd64/rstudio-server-1.2.1578-amd64.deb > /tmp/rstudio.deb && \
+    curl --silent -L --fail \
+        https://s3.amazonaws.com/rstudio-ide-build/server/bionic/amd64/rstudio-server-1.2.1578-amd64.deb > /tmp/rstudio.deb && \
     \
     # install R studio
     apt-get update && \
@@ -67,23 +68,19 @@ RUN \
 USER ${NB_USER}
 
 RUN pip install \
-        cookiecutter==1.7.2 \
-        jupyterlab_vim && \
+        cookiecutter==1.7.3 \
+        jupyterlab_vim==0.14.2 && \
     \
-    pip install \
+    pip install \ 
         jupyter-server-proxy==1.6.0 \
         jupyter-rsession-proxy==1.2.0 && \
     jupyter labextension install @jupyterlab/server-proxy && \
     \
-    pip install jupyter_http_over_ws>=0.0.8 && \
-    jupyter serverextension enable --py jupyter_http_over_ws && \
-    \
     pip install jupyterlab_latex==2.0.0 && \
-    jupyter labextension install @jupyterlab/latex
-
-RUN pip install jupyterlab-git
-
-RUN pip install nbgitpuller==0.10.1 && \
+    jupyter labextension install @jupyterlab/latex && \
+    \
+    pip install \
+        jupyterlab-git==0.32.2 \
+        nbgitpuller==0.10.1 && \
     jupyter serverextension enable --sys-prefix nbgitpuller && \
     jupyter lab build
-

@@ -22,6 +22,6 @@ cat <<EOF > .env
 ## variables for docker-compose
 
 HOST_DIR=${PWD}
-CERT_DIR=${PWD}/.dddlab/keys
+CERT_DIR=/etc/letsencrypt
 PASSWD=$(.dddlab/hash-password | tail -n1)
 EOF
