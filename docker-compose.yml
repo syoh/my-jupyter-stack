@@ -6,6 +6,7 @@ services:
       dockerfile: Dockerfile
     image: syoh/my-jupyter-stack:latest
     volumes:
+      - ${SSH_DIR}:/home/jovyan/.ssh
       - ${HOST_DIR}:/home/jovyan/work
       - ${CERT_DIR}:/etc/letsencrypt
     user: 'root' # passwordless sudo

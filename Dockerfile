@@ -65,6 +65,11 @@ RUN \
     rm /tmp/rstudio.deb && \
     apt-get clean && rm -rf /var/lib/apt/lists/*
 
+RUN git clone \
+        https://github.com/TheLocehiliosan/yadm.git \
+        /usr/local/share/yadm && \
+    ln -s /usr/local/share/yadm/yadm /usr/local/bin/yadm
+
 USER ${NB_USER}
 
 RUN pip install \
