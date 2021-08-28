@@ -68,7 +68,11 @@ RUN \
 RUN git clone \
         https://github.com/TheLocehiliosan/yadm.git \
         /usr/local/share/yadm && \
-    ln -s /usr/local/share/yadm/yadm /usr/local/bin/yadm
+    ln -s /usr/local/share/yadm/yadm /usr/local/bin/yadm && \
+    \
+    wget https://github.com/cli/cli/releases/download/v2.0.0/gh_2.0.0_linux_amd64.tar.gz -O - | tar -xz && \
+    mv gh_2.0.0_linux_amd64 /usr/local/share/gh && \
+    ln -s /usr/local/share/gh/bin/gh /usr/local/bin/gh
 
 USER ${NB_USER}
 
