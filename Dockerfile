@@ -72,7 +72,14 @@ RUN git clone \
     \
     wget https://github.com/cli/cli/releases/download/v2.0.0/gh_2.0.0_linux_amd64.tar.gz -O - | tar -xz && \
     mv gh_2.0.0_linux_amd64 /usr/local/share/gh && \
-    ln -s /usr/local/share/gh/bin/gh /usr/local/bin/gh
+    ln -s /usr/local/share/gh/bin/gh /usr/local/bin/gh && \
+    \
+    echo "deb [signed-by=/usr/share/keyrings/cloud.google.gpg] http://packages.cloud.google.com/apt cloud-sdk main" | \
+    tee -a /etc/apt/sources.list.d/google-cloud-sdk.list && \
+    curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | \
+    apt-key --keyring /usr/share/keyrings/cloud.google.gpg add - && \
+    apt-get update -y && apt-get install google-cloud-sdk -y
+      
 
 USER ${NB_USER}
 
