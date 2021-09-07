@@ -1,4 +1,4 @@
-FROM jupyter/minimal-notebook:70178b8e48d7
+FROM jupyter/scipy-notebook:70178b8e48d7
 
 # Fix DL4006
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
@@ -13,7 +13,8 @@ RUN apt-get update --yes && \
     unixodbc-dev \
     r-cran-rodbc \
     gfortran \
-    gcc && \
+    gcc \
+    gnupg && \
     apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # Fix for devtools https://github.com/conda-forge/r-devtools-feedstock/issues/4
